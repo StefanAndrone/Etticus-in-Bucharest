@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -14,7 +16,12 @@ namespace Etticus_in_Bucharest
     {
         private PictureBox p;
 
-        public ButonPictura(String filename, int x, int y, int height, int width, Form1 f)
+        public PictureBox getP()
+        {
+            return p;
+        }
+
+        public ButonPictura(String filename, int x, int y, int width, int height, Form1 f, Action<object, EventArgs> func)
         {
             filename = "../../img/" + filename;
             p = new PictureBox();
@@ -25,6 +32,7 @@ namespace Etticus_in_Bucharest
             p.Width = width;
             f.Controls.Add(p);
             p.SizeMode = PictureBoxSizeMode.StretchImage;
+            p.Click += (s, e) => func(s, e);
         }
     }
 }
