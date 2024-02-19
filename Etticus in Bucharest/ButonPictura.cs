@@ -33,6 +33,22 @@ namespace Etticus_in_Bucharest
             f.Controls.Add(p);
             p.SizeMode = PictureBoxSizeMode.StretchImage;
             p.Click += (s, e) => func(s, e);
+            p.BringToFront();
+        }
+
+        public void front()
+        {
+            p.BringToFront();
+        }
+
+        public void disappear()
+        {
+            p.Visible = false;
+        }
+
+        public void setClick(Action<object, EventArgs> func)
+        {
+            p.Click += (s, e) => func(s, e);
         }
     }
 }
