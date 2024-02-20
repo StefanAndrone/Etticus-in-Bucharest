@@ -32,8 +32,9 @@ namespace Etticus_in_Bucharest
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.Width = 801;
-            this.Height = 505;
+            this.AutoScaleMode = AutoScaleMode.Dpi;
+            this.Width = 815;
+            this.Height = 525;
             OuterSpace = new ButonPictura("OuterSpace.jfif", 0, 0, 801, 505, this, do_nothing);
             Play = new ButonPictura("Play.png", 350, 350, 100, 50, this, Play_Click);     
         }
