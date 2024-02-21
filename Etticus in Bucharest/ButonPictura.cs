@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,7 @@ namespace Etticus_in_Bucharest
     public class ButonPictura
     {
         private PictureBox p;
+        private EventHandler handler;
 
         public PictureBox getP()
         {
@@ -23,16 +25,19 @@ namespace Etticus_in_Bucharest
 
         public ButonPictura(String filename, int x, int y, int width, int height, Form1 f, Action<object, EventArgs> func)
         {
-            filename = "../../img/" + filename;
+            if(!filename.Equals("-"))
+                filename = "../../img/" + filename;
             p = new PictureBox();
-            p.Image = Image.FromFile(filename);
+            if(!filename.Equals("-"))
+                p.Image = Image.FromFile(filename);
             p.Visible = true;
             p.Location = new Point(x, y);
             p.Height = height;
             p.Width = width;
             f.Controls.Add(p);
             p.SizeMode = PictureBoxSizeMode.StretchImage;
-            p.Click += (s, e) => func(s, e);
+            handler = (s, e) => func(s, e);
+            p.Click += handler;
             p.BringToFront();
         }
 
@@ -46,9 +51,40 @@ namespace Etticus_in_Bucharest
             p.Visible = false;
         }
 
-        public void setClick(Action<object, EventArgs> func)
+        public void appear(bool front)
         {
-            p.Click += (s, e) => func(s, e);
+            p.Visible = true;
+            if (front)
+                p.BringToFront();
+        }
+
+        public void setClick(Action<object, EventArgs> func)
+        {       
+            p.Click -= handler;
+            handler = (s, e) => func(s, e);
+            p.Click += handler;
+        }
+
+        public void setImage(string filename)
+        {
+            filename = "../../img/" + filename;           
+            p.Image = Image.FromFile(filename);
+        }
+
+        public static void appearVector(ArrayList list, bool front)
+        {
+            foreach (ButonPictura iterator in list)
+            {
+                iterator.appear(front);
+            }
+        }
+
+        public static void disappearVector(ArrayList list)
+        {
+            foreach (ButonPictura iterator in list)
+            {
+                iterator.disappear();
+            }
         }
     }
 }
