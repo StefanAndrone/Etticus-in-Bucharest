@@ -58,6 +58,12 @@ namespace Etticus_in_Bucharest
                 p.BringToFront();
         }
 
+        public void dispose()
+        {
+            p.Dispose();
+            handler = null;
+        }
+
         public void setClick(Action<object, EventArgs> func)
         {       
             p.Click -= handler;
@@ -85,6 +91,29 @@ namespace Etticus_in_Bucharest
             {
                 iterator.disappear();
             }
+        }
+
+        public static void disposeOfVector(ArrayList list)
+        {
+            foreach (ButonPictura iterator in list)
+            {
+                iterator.dispose();
+            }
+        }
+
+        public void setCoordinates(int x, int y)
+        {
+            p.Location = new Point(x, y);
+        }
+
+        public void increaseWidth(int x)
+        {
+            p.Width += x;
+        }
+
+        public void increaseHeight(int x)
+        {
+            p.Height += x;
         }
     }
 }
